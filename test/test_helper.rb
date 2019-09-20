@@ -17,6 +17,8 @@ class ActiveSupport::TestCase
   	l = 0
   	array_open = []
 
+####### HELP: Calendar creation Event 'opening'
+
   	10.times do		
   		Event.create(kind: 'opening', starts_at: DateTime.parse("2014-08-#{i} 09:30"), ends_at: DateTime.parse("2014-08-#{i} 19:30"), weekly_recurring: true)  	
 	  	array_open[l] = {:kind => "", :starts_at => "", :ends_at => "", :weekly_recurring => true, :slots => ""}
@@ -29,6 +31,7 @@ class ActiveSupport::TestCase
 	  	l += 1
   	end
 
+####### HELP: Return an Array for incoming days
   	if input.class == Integer
   		array_answer = []
   		x = 0
@@ -40,7 +43,8 @@ class ActiveSupport::TestCase
   		end
   		
   		return array_answer
-  	
+
+####### HELP: Return a Day where your input slots are availables	
   	elsif input.class == Array	
   		array_answer = []
   		x = 0
@@ -51,6 +55,8 @@ class ActiveSupport::TestCase
   		end
   		array_answer = "#{array_open[2][:starts_at].day}" + "-" + "#{array_open[2][:starts_at].month}" + "-" + "#{array_open[2][:starts_at].year}"
   		return array_answer
+
+####### HELP: Verify if this day has an Event with 'opening' start_at and ends_at
   	else
   		begin
 	  		a = Event.find_by(starts_at: input).id
@@ -70,7 +76,8 @@ class ActiveSupport::TestCase
 		i = 10
 		m = 0
 		array_closed = []
-		
+
+####### HELP: Create Event 'appointment' with randow schedule
 		10.times do
 			nbr = Faker::Number.between(from: 10, to: 15)
 			nbr_choice = Faker::Number.between(from: 1, to: 3)
@@ -82,6 +89,7 @@ class ActiveSupport::TestCase
   			array_closed[m][:ends_at] = Event.last.ends_at
   			p = 0
 
+####### HELP: Create [:slots] with proper availability
   			8.times do
 	  			v = array_closed[m][:starts_at]
 	  			time_v = v.hour
@@ -101,20 +109,11 @@ class ActiveSupport::TestCase
   			i += 1
   			m += 1
   		end
-  		
+
+####### HELP: Return [:slots] for the correct day
   		if inputation.class == Integer
 	  		free_slots = array_closed[inputation - 10][:slots]
 	  		return free_slots
-
-  		elsif inputation.class == Array
-			i = 0
-			var_loop = false
-  			
-  			while var_loop == false
-  				var_loop = array_closed[i][:slots].include?("inputation")
-  				i +=1
-  			end
-  			return array_closed[i][:starts_at]
   		end
 	end
 end
