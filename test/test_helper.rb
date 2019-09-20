@@ -10,7 +10,6 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
  
-
   def availabilities(input)
   	i = 10
   	a = 0
@@ -18,7 +17,6 @@ class ActiveSupport::TestCase
   	array_open = []
 
 ####### HELP: Calendar creation Event 'opening'
-
   	10.times do		
   		Event.create(kind: 'opening', starts_at: DateTime.parse("2014-08-#{i} 09:30"), ends_at: DateTime.parse("2014-08-#{i} 19:30"), weekly_recurring: true)  	
 	  	array_open[l] = {:kind => "", :starts_at => "", :ends_at => "", :weekly_recurring => true, :slots => ""}
